@@ -5,11 +5,21 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import com.svprdga.mvppaymentflowdemo.R
+import com.svprdga.mvppaymentflowdemo.presentation.presenter.abstraction.IMainPresenter
+import com.svprdga.mvppaymentflowdemo.presentation.presenter.view.IMainView
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
+
+const val TAG_MAIN = "main"
 
 private const val ANIMATION_DURATION_MS = 250L
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity(), IMainView {
+
+    // ************************************* INJECTED VARS ************************************* //
+
+    @Inject
+    lateinit var presenter: IMainPresenter
 
     // ****************************************** VARS ***************************************** //
 
@@ -20,6 +30,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // DI.
+        getUiComponent(TAG_MAIN).inject(this)
 
         calculateWindowWidth()
         prepareLayoutsForAnimations()
@@ -37,6 +50,26 @@ class MainActivity : AppCompatActivity() {
         handler.postDelayed({
             animateAmountToContacts()
         }, 12000)
+
+        presenter.bind(this)
+    }
+
+    public override fun onStart() {
+        super.onStart()
+
+        presenter.onStartView()
+    }
+
+    public override fun onStop() {
+        super.onStop()
+
+        presenter.onStopView()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        presenter.unBind()
     }
 
     // ************************************ PRIVATE METHODS ************************************ //
