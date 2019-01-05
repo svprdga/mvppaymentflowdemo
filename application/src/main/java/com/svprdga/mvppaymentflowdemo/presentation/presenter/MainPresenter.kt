@@ -1,5 +1,7 @@
 package com.svprdga.mvppaymentflowdemo.presentation.presenter
 
+import com.svprdga.mvppaymentflowdemo.presentation.eventbus.MainBus
+import com.svprdga.mvppaymentflowdemo.presentation.eventbus.MainEvent
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.abstraction.IMainPresenter
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.view.IMainView
 import com.svprdga.mvppaymentflowdemo.util.Logger
@@ -7,7 +9,8 @@ import com.svprdga.mvppaymentflowdemo.util.PermissionHelper
 
 class MainPresenter(
     logger: Logger,
-    private val permissionHelper: PermissionHelper)
+    private val permissionHelper: PermissionHelper,
+    private val mainBus: MainBus)
     : BasePresenter(logger), IMainPresenter {
 
     // ****************************************** VARS ***************************************** //
@@ -40,7 +43,9 @@ class MainPresenter(
     }
 
     override fun readContactsPermissionGranted() {
-        // TODO
+        view?.hidePermissionDeniedLayout()
+        mainBus.setEvent(MainEvent.LOAD_CONTACTS)
+        view?.showMainLayouts()
     }
 
     override fun readContactsPermissionDenied() {

@@ -6,4 +6,8 @@ interface IMainView : IView {
 
     fun showPermissionDeniedLayout()
 
+    fun hidePermissionDeniedLayout()
+
+    fun showMainLayouts()
+
 }

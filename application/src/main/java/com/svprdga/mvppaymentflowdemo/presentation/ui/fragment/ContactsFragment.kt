@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import com.svprdga.mvppaymentflowdemo.R
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.abstraction.IContactsPresenter
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.view.IContactsView
+import kotlinx.android.synthetic.main.fragment_contacts.*
 import javax.inject.Inject
 
 const val TAG_CONTACTS = "contacts";
@@ -36,6 +37,16 @@ class ContactsFragment : BaseFragment(), IContactsView {
         super.onDestroy()
 
         presenter.unBind()
+    }
+
+    // ************************************* PUBLIC METHODS ************************************ //
+
+    override fun showLoading() {
+        loadingView.visibility = View.VISIBLE
+    }
+
+    override fun hideLoading() {
+        loadingView.visibility = View.GONE
     }
 
 }

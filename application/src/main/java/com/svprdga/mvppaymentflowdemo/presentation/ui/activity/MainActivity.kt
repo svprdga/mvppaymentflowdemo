@@ -96,6 +96,14 @@ class MainActivity : BaseActivity(), IMainView {
         noPermissionsLayout.visibility = View.VISIBLE
     }
 
+    override fun hidePermissionDeniedLayout() {
+        noPermissionsLayout.visibility = View.GONE
+    }
+
+    override fun showMainLayouts() {
+        mainLayouts.visibility = View.VISIBLE
+    }
+
     // ************************************ PRIVATE METHODS ************************************ //
 
     private fun calculateWindowWidth() {
