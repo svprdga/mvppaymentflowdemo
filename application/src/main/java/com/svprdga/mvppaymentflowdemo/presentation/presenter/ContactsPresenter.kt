@@ -1,8 +1,8 @@
 package com.svprdga.mvppaymentflowdemo.presentation.presenter
 
 import com.svprdga.mvppaymentflowdemo.data.datasource.ContactDataSource
-import com.svprdga.mvppaymentflowdemo.presentation.eventbus.MainBus
-import com.svprdga.mvppaymentflowdemo.presentation.eventbus.MainEvent
+import com.svprdga.mvppaymentflowdemo.domain.model.Contact
+import com.svprdga.mvppaymentflowdemo.presentation.eventbus.*
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.abstraction.IContactsPresenter
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.view.IContactsView
 import com.svprdga.mvppaymentflowdemo.util.Logger
@@ -13,13 +13,14 @@ import io.reactivex.schedulers.Schedulers
 class ContactsPresenter(
     logger: Logger,
     private val mainBus: MainBus,
-    private val contactDataSource: ContactDataSource
-)
+    private val contactDataSource: ContactDataSource,
+    private val contactsBus: ContactsBus)
     : BasePresenter(logger), IContactsPresenter {
 
     // ****************************************** VARS ***************************************** //
 
     private var view: IContactsView? = null
+    private var contacts = ArrayList<Contact>()
 
     // ************************************* CALLBACK VARS ************************************* //
 
@@ -27,6 +28,7 @@ class ContactsPresenter(
         get() = object : DisposableObserver<MainEvent>() {
             override fun onNext(event: MainEvent) {
                 if (event == MainEvent.LOAD_CONTACTS) loadContacts()
+                else if (event == MainEvent.UNSELECT_ALL) unselectAllContacts()
             }
 
             override fun onError(e: Throwable) {
@@ -61,6 +63,16 @@ class ContactsPresenter(
         log.debug("Stop view.")
     }
 
+    override fun contactSelected(contact: Contact) {
+        contacts.add(contact)
+        contactsBus.setData(contacts)
+    }
+
+    override fun contactUnselected(contact: Contact) {
+        contacts.remove(contact)
+        contactsBus.setData(contacts)
+    }
+
     // ************************************ PRIVATE METHODS ************************************ //
 
     private fun loadContacts() {
@@ -74,6 +86,12 @@ class ContactsPresenter(
                 view?.hideLoading()
                 view?.showContacts(contacts)
             }
+    }
+
+    private fun unselectAllContacts() {
+        view?.unselectAllViews()
+        contacts = ArrayList()
+        contactsBus.setData(contacts)
     }
 
 }

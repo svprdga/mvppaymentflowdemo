@@ -1,5 +1,6 @@
 package com.svprdga.mvppaymentflowdemo.di.module
 
+import com.svprdga.mvppaymentflowdemo.presentation.eventbus.ContactsBus
 import com.svprdga.mvppaymentflowdemo.presentation.eventbus.MainBus
 import dagger.Module
 import dagger.Provides
@@ -12,5 +13,11 @@ class BusModule {
     @Singleton
     fun provideMainBus(): MainBus {
         return MainBus()
+    }
+
+    @Provides
+    @Singleton
+    fun provideContactsBus(): ContactsBus {
+        return ContactsBus()
     }
 }

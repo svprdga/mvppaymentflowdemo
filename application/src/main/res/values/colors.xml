@@ -2,10 +2,11 @@
 <resources>
 
     <!--Material-->
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimary">#45b1fe</color>
+    <color name="colorPrimaryDark">#0082ca</color>
+    <color name="colorPrimaryLight">#84e3ff</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="colorPrimaryDisabled">#AA008577</color>
+    <color name="colorPrimaryDisabled">#AA45b1fe</color>
 
     <!--Text-->
     <color name="primaryTextLight">#DE000000</color>
@@ -17,4 +18,7 @@
     <color name="secondaryTextDark">#B3FFFFFF</color>
     <color name="hintDisabledTextDark">#4DFFFFFF</color>
     <color name="dividerDark">#1FFFFFFF</color>
+
+    <!--Lists-->
+    <color name="listEntrySelected">#2645b1fe</color>
 </resources>

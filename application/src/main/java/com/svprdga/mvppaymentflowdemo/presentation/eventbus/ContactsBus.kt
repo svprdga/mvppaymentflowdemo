@@ -1,27 +1,22 @@
 package com.svprdga.mvppaymentflowdemo.presentation.eventbus
 
+import com.svprdga.mvppaymentflowdemo.domain.model.Contact
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 
-
-enum class MainEvent {
-    LOAD_CONTACTS,
-    UNSELECT_ALL
-}
-
-class MainBus {
+class ContactsBus {
 
     // ****************************************** VARS ***************************************** //
 
-    private val subject: PublishSubject<MainEvent> = PublishSubject.create()
+    private val subject: PublishSubject<ArrayList<Contact>> = PublishSubject.create()
 
     // ************************************* PUBLIC METHODS ************************************ //
 
-    fun setEvent(event: MainEvent) {
-        subject.onNext(event)
+    fun setData(contacts: ArrayList<Contact>) {
+        subject.onNext(contacts)
     }
 
-    fun getEvent(): Observable<MainEvent> {
+    fun getData(): Observable<ArrayList<Contact>> {
         return subject
     }
 

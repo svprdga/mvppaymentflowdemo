@@ -7,7 +7,8 @@
     <string name="mainActivity_contactsPermissionDenied_h0">This application uses your contact information to provide you a way to manage your payments.</string>
     <string name="mainActivity_contactsPermissionDenied_h1">This information is not sent to any place.</string>
     <string name="mainActivity_contactsPermissionDenied_button">Allow access</string>
-
-
+    <string name="mainActivity_contactsStatus">Select contacts</string>
+    <string name="mainActivity_amountStatus">Enter amount</string>
+    <string name="mainActivity_totalStatus">Total result</string>
 
 </resources>

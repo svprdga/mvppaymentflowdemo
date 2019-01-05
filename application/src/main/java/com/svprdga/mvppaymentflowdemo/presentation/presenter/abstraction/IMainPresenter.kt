@@ -13,4 +13,11 @@ interface IMainPresenter : IPresenter<IMainView> {
      */
     fun askForContactsPermissionClick()
 
+    fun backPressed()
+
+    /**
+     * The user clicked in the next button.
+     */
+    fun clickNext()
+
 }

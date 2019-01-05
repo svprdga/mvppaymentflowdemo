@@ -9,6 +9,7 @@ import com.svprdga.mvppaymentflowdemo.R
 import com.svprdga.mvppaymentflowdemo.domain.model.Contact
 import com.svprdga.mvppaymentflowdemo.presentation.custom.ContactClickListener
 import com.svprdga.mvppaymentflowdemo.presentation.custom.ContactListAdapter
+import com.svprdga.mvppaymentflowdemo.presentation.custom.ContactViewHolder
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.abstraction.IContactsPresenter
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.view.IContactsView
 import kotlinx.android.synthetic.main.fragment_contacts.*
@@ -26,6 +27,7 @@ class ContactsFragment : BaseFragment(), IContactsView {
     // ****************************************** VARS ***************************************** //
 
     private var adapter: ContactListAdapter? = null
+    private var selectedEntries = ArrayList<ContactViewHolder>()
 
     // *************************************** LIFECYCLE *************************************** //
 
@@ -64,12 +66,28 @@ class ContactsFragment : BaseFragment(), IContactsView {
         scrollView.visibility = View.VISIBLE
     }
 
+    override fun unselectAllViews() {
+        for(view: ContactViewHolder in selectedEntries) {
+            view.unselect()
+        }
+        selectedEntries = ArrayList()
+    }
+
     // ************************************** UI LISTENERS ************************************* //
 
     private val entryListener: ContactClickListener
         get () = object : ContactClickListener {
-            override fun onClick(contact: Contact?) {
-                // TODO
+            override fun onClick(view: ContactViewHolder, contact: Contact?, selected: Boolean) {
+                contact?.let {
+                    if (selected) {
+                        presenter.contactSelected(it)
+                        selectedEntries.add(view)
+                    }
+                    else {
+                        presenter.contactUnselected(it)
+                        selectedEntries.remove(view)
+                    }
+                }
             }
         }
 

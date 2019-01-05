@@ -12,7 +12,7 @@ import com.svprdga.mvppaymentflowdemo.R
 import com.svprdga.mvppaymentflowdemo.domain.model.Contact
 
 interface ContactClickListener {
-    fun onClick(contact: Contact?)
+    fun onClick(view: ContactViewHolder, contact: Contact?, selected: Boolean)
 }
 
 class ContactViewHolder(view: View)
@@ -21,6 +21,7 @@ class ContactViewHolder(view: View)
     // ****************************************** VARS ***************************************** //
 
     var contact: Contact? = null
+    var selected: Boolean = false
 
     // ***************************************** VIEWS ***************************************** //
 
@@ -36,6 +37,8 @@ class ContactViewHolder(view: View)
             view.findViewById(R.id.contactDetailsTextView)
     private val bottomDividerView: View =
             view.findViewById(R.id.bottomDividerView)
+    private val selectedView: View =
+            view.findViewById(R.id.selectedView)
 
     // ************************************* PUBLIC METHODS ************************************ //
 
@@ -70,9 +73,34 @@ class ContactViewHolder(view: View)
         }
 
         entryLayout.setOnClickListener {
-            listener.onClick(this.contact)
+
+            if (selected) unselect()
+            else select()
+
+            listener.onClick(this, this.contact, selected)
         }
     }
+
+    /**
+     * Mark this entry as selected.
+     */
+    fun select() {
+        if (!selected) {
+            selectedView.visibility = View.VISIBLE
+            selected = true
+        }
+    }
+
+    /**
+     * Unmark this entry as selected.
+     */
+    fun unselect() {
+        if (selected) {
+            selectedView.visibility = View.GONE
+            selected = false
+        }
+    }
+
 }
 
 /**

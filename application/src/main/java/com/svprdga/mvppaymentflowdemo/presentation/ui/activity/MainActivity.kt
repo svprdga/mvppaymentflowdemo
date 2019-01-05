@@ -2,15 +2,15 @@ package com.svprdga.mvppaymentflowdemo.presentation.ui.activity
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.content.res.ColorStateList
 import android.graphics.Point
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.view.View
 import com.svprdga.mvppaymentflowdemo.R
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.abstraction.IMainPresenter
+import com.svprdga.mvppaymentflowdemo.presentation.presenter.view.ButtonState
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.view.IMainView
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
@@ -42,6 +42,7 @@ class MainActivity : BaseActivity(), IMainView {
         getUiComponent(TAG_MAIN).inject(this)
 
         // Toolbar.
+        toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.primaryTextDark))
         setSupportActionBar(toolbar)
 
         // Prepare animations.
@@ -92,6 +93,10 @@ class MainActivity : BaseActivity(), IMainView {
         }
     }
 
+    override fun onBackPressed() {
+        presenter.backPressed()
+    }
+
     override fun showPermissionDeniedLayout() {
         noPermissionsLayout.visibility = View.VISIBLE
     }
@@ -102,6 +107,90 @@ class MainActivity : BaseActivity(), IMainView {
 
     override fun showMainLayouts() {
         mainLayouts.visibility = View.VISIBLE
+    }
+
+    override fun setBackButtonState(state: ButtonState) {
+        when(state) {
+            ButtonState.DISABLED -> {
+                backButton.visibility = View.VISIBLE
+                backButton.isEnabled = false
+                backButton.imageTintList = ColorStateList.valueOf(
+                    ContextCompat.getColor(this, R.color.hintDisabledTextDark))
+            }
+            ButtonState.ENABLED -> {
+                backButton.visibility = View.VISIBLE
+                backButton.isEnabled = true
+                backButton.imageTintList = ColorStateList.valueOf(
+                    ContextCompat.getColor(this, R.color.primaryTextDark))
+            }
+            else -> {
+                backButton.visibility = View.INVISIBLE
+            }
+        }
+    }
+
+    override fun setNextButtonState(state: ButtonState) {
+        when(state) {
+            ButtonState.DISABLED -> {
+                nextButton.visibility = View.VISIBLE
+                nextButton.isEnabled = false
+                nextButton.imageTintList = ColorStateList.valueOf(
+                    ContextCompat.getColor(this, R.color.hintDisabledTextDark))
+            }
+            ButtonState.ENABLED -> {
+                nextButton.visibility = View.VISIBLE
+                nextButton.isEnabled = true
+                nextButton.imageTintList = ColorStateList.valueOf(
+                    ContextCompat.getColor(this, R.color.primaryTextDark))
+            }
+            else -> {
+                nextButton.visibility = View.INVISIBLE
+            }
+        }
+    }
+
+    override fun setStatusText(text: String) {
+        statusText.text = text
+    }
+
+    override fun animateContactsToAmount() {
+        contactFrame.animate()
+            .translationXBy(-windowWidth)
+            .duration = ANIMATION_DURATION_MS
+        amountFrame.animate()
+            .translationXBy(-windowWidth)
+            .duration = ANIMATION_DURATION_MS
+    }
+
+    override fun animateAmountToSubmit() {
+        amountFrame.animate()
+            .translationXBy(-windowWidth)
+            .duration = ANIMATION_DURATION_MS
+        submitFrame.animate()
+            .translationXBy(-windowWidth)
+            .duration = ANIMATION_DURATION_MS
+    }
+
+    override fun animateSubmitToAmount() {
+        submitFrame.animate()
+            .translationXBy(windowWidth)
+            .duration = ANIMATION_DURATION_MS
+        amountFrame.animate()
+            .translationXBy(windowWidth)
+            .duration = ANIMATION_DURATION_MS
+    }
+
+    override fun animateAmountToContacts() {
+        amountFrame.animate()
+            .translationXBy(windowWidth)
+            .duration = ANIMATION_DURATION_MS
+        contactFrame.animate()
+            .translationXBy(windowWidth)
+            .duration = ANIMATION_DURATION_MS
+    }
+
+    override fun finish() {
+        super.finish()
     }
 
     // ************************************ PRIVATE METHODS ************************************ //
@@ -118,48 +207,16 @@ class MainActivity : BaseActivity(), IMainView {
         submitFrame.x = windowWidth
     }
 
-    private fun animateContactsToAmount() {
-        contactFrame.animate()
-            .translationXBy(-windowWidth)
-            .duration = ANIMATION_DURATION_MS
-        amountFrame.animate()
-            .translationXBy(-windowWidth)
-            .duration = ANIMATION_DURATION_MS
-    }
-
-    private fun animateAmountToSubmit() {
-        amountFrame.animate()
-            .translationXBy(-windowWidth)
-            .duration = ANIMATION_DURATION_MS
-        submitFrame.animate()
-            .translationXBy(-windowWidth)
-            .duration = ANIMATION_DURATION_MS
-    }
-
-    private fun animateSubmitToAmount() {
-        submitFrame.animate()
-            .translationXBy(windowWidth)
-            .duration = ANIMATION_DURATION_MS
-        amountFrame.animate()
-            .translationXBy(windowWidth)
-            .duration = ANIMATION_DURATION_MS
-    }
-
-    private fun animateAmountToContacts() {
-        amountFrame.animate()
-            .translationXBy(windowWidth)
-            .duration = ANIMATION_DURATION_MS
-        contactFrame.animate()
-            .translationXBy(windowWidth)
-            .duration = ANIMATION_DURATION_MS
-    }
-
     private fun setListeners() {
         allowContactsPermissionButton.setOnClickListener(allowContactsPermissionListener)
+        nextButton.setOnClickListener(nextListener)
     }
 
     // ************************************** UI LISTENERS ************************************* //
 
     private val allowContactsPermissionListener: View.OnClickListener
         get() = View.OnClickListener { presenter.askForContactsPermissionClick() }
+
+    private val nextListener: View.OnClickListener
+        get() = View.OnClickListener { presenter.clickNext() }
 }

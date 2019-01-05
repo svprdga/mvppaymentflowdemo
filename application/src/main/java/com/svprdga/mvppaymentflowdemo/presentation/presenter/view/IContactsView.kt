@@ -11,4 +11,6 @@ interface IContactsView : IView {
 
     fun showContacts(contacts: List<Contact>)
 
+    fun unselectAllViews()
+
 }

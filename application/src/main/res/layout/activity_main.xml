@@ -184,7 +184,45 @@
         android:id="@+id/bottomView"
         android:layout_width="match_parent"
         android:layout_height="75dp"
-        android:background="#FABACA"
+        android:background="@color/colorPrimaryLight"
         app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_button_0"
+        android:src="@mipmap/ic_arrow_left"
+        app:layout_constraintBottom_toBottomOf="@id/bottomView"
+        app:layout_constraintStart_toStartOf="@id/bottomView"
+        app:layout_constraintTop_toTopOf="@id/bottomView"
+        android:layout_marginStart="14dp"/>
+
+    <TextView
+        android:id="@+id/statusText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="text"
+        android:textColor="@color/primaryTextDark"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/nextButton"
+        app:layout_constraintStart_toEndOf="@+id/backButton"
+        app:layout_constraintTop_toTopOf="@+id/bottomView"
+        app:layout_constraintBottom_toBottomOf="@+id/bottomView"
+        android:layout_marginEnd="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"/>
+
+    <ImageButton
+        android:id="@+id/nextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_button_0"
+        android:src="@mipmap/ic_arrow_right"
+        app:layout_constraintBottom_toBottomOf="@id/bottomView"
+        app:layout_constraintEnd_toEndOf="@id/bottomView"
+        app:layout_constraintTop_toTopOf="@id/bottomView"
+        android:layout_marginEnd="14dp"/>
 
 </android.support.constraint.ConstraintLayout>
