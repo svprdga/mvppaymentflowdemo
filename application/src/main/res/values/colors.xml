@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--Material-->
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimaryDisabled">#AA008577</color>
+
+    <!--Text-->
+    <color name="primaryTextLight">#DE000000</color>
+    <color name="secondaryTextLight">#8A000000</color>
+    <color name="hintDisabledTextLight">#61000000</color>
+    <color name="dividerLight">#1F000000</color>
+    <color name="activityBackgroundLight">#EDEDED</color>
+    <color name="primaryTextDark">#FFFFFF</color>
+    <color name="secondaryTextDark">#B3FFFFFF</color>
+    <color name="hintDisabledTextDark">#4DFFFFFF</color>
+    <color name="dividerDark">#1FFFFFFF</color>
 </resources>

@@ -1,8 +1,9 @@
 package com.svprdga.mvppaymentflowdemo.di.module
 
+import com.svprdga.mvppaymentflowdemo.data.ContactDataSource
 import com.svprdga.mvppaymentflowdemo.di.annotation.PerUiComponent
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.AmountPresenter
-import com.svprdga.mvppaymentflowdemo.presentation.presenter.ContactPresenter
+import com.svprdga.mvppaymentflowdemo.presentation.presenter.ContactsPresenter
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.MainPresenter
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.SubmitPresenter
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.abstraction.IAmountPresenter
@@ -10,6 +11,7 @@ import com.svprdga.mvppaymentflowdemo.presentation.presenter.abstraction.IContac
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.abstraction.IMainPresenter
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.abstraction.ISubmitPresenter
 import com.svprdga.mvppaymentflowdemo.util.Logger
+import com.svprdga.mvppaymentflowdemo.util.PermissionHelper
 import dagger.Module
 import dagger.Provides
 
@@ -18,14 +20,14 @@ class PresenterModule {
 
     @Provides
     @PerUiComponent
-    fun provideMainPresenter(logger: Logger): IMainPresenter {
-        return MainPresenter(logger)
+    fun provideMainPresenter(logger: Logger, permissionHelper: PermissionHelper): IMainPresenter {
+        return MainPresenter(logger, permissionHelper)
     }
 
     @Provides
     @PerUiComponent
     fun provideContactPresenter(logger: Logger): IContactsPresenter {
-        return ContactPresenter(logger)
+        return ContactsPresenter(logger)
     }
 
     @Provides

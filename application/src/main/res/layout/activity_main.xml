@@ -7,6 +7,133 @@
     android:layout_height="match_parent"
     tools:context=".presentation.ui.activity.MainActivity">
 
+    <!--TOOLBAR-->
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <!--NO PERMISSIONS LAYOUT-->
+
+    <android.support.constraint.Group
+        android:id="@+id/noPermissionsLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="
+            allowContactsPermissionButton,
+            noPermissionsH0TextView,
+            noPermissionsP1TextView,
+            noPermissionsP0TextView,
+            noPermissionsImageView"/>
+
+    <ImageView
+        android:id="@+id/noPermissionsImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:alpha="0.5"
+        android:src="@mipmap/img_denied_contact_permission"
+        app:layout_constraintBottom_toTopOf="@+id/noPermissionsH0TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+        app:layout_constraintVertical_chainStyle="packed"/>
+
+    <TextView
+        android:id="@+id/noPermissionsH0TextView"
+        android:layout_width="238dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:text="@string/mainActivity_contactsPermissionDenied_title"
+        android:textColor="@color/primaryTextLight"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/noPermissionsP0TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/noPermissionsImageView"/>
+
+    <TextView
+        android:id="@+id/noPermissionsP0TextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:text="@string/mainActivity_contactsPermissionDenied_h0"
+        android:textColor="@color/primaryTextLight"
+        android:textSize="16sp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/noPermissionsP1TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/noPermissionsH0TextView"/>
+
+    <TextView
+        android:id="@+id/noPermissionsP1TextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:gravity="center"
+        android:text="@string/mainActivity_contactsPermissionDenied_h1"
+        android:textColor="@color/primaryTextLight"
+        android:textSize="16sp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/allowContactsPermissionButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/noPermissionsP0TextView"/>
+
+    <Button
+        android:id="@+id/allowContactsPermissionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/selector_button_round"
+        android:paddingLeft="32dp"
+        android:paddingTop="3dp"
+        android:paddingRight="32dp"
+        android:paddingBottom="3dp"
+        android:text="@string/mainActivity_contactsPermissionDenied_button"
+        android:textColor="@color/primaryTextDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/noPermissionsP1TextView"/>
+
+    <!--PAYMENT LAYOUT-->
+
+    <android.support.constraint.Group
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:constraint_referenced_ids="
+            contactFrame,
+            amountFrame,
+            submitFrame,
+            bottomView"/>
+
     <FrameLayout
         android:id="@+id/contactFrame"
         android:layout_width="0dp"

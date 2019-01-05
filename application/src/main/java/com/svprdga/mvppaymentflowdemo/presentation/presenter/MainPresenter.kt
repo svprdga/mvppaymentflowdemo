@@ -3,8 +3,12 @@ package com.svprdga.mvppaymentflowdemo.presentation.presenter
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.abstraction.IMainPresenter
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.view.IMainView
 import com.svprdga.mvppaymentflowdemo.util.Logger
+import com.svprdga.mvppaymentflowdemo.util.PermissionHelper
 
-class MainPresenter(logger: Logger): BasePresenter(logger), IMainPresenter {
+class MainPresenter(
+    logger: Logger,
+    private val permissionHelper: PermissionHelper)
+    : BasePresenter(logger), IMainPresenter {
 
     // ****************************************** VARS ***************************************** //
 
@@ -14,6 +18,13 @@ class MainPresenter(logger: Logger): BasePresenter(logger), IMainPresenter {
 
     override fun bind(view: IMainView) {
         this.view = view
+
+        if (permissionHelper.isReadContactsPermisionGranted) {
+            readContactsPermissionGranted()
+        } else {
+            view.askForReadContactsPermission()
+        }
+
     }
 
     override fun unBind() {
@@ -26,6 +37,18 @@ class MainPresenter(logger: Logger): BasePresenter(logger), IMainPresenter {
 
     override fun onStopView() {
         log.debug("Stop view.")
+    }
+
+    override fun readContactsPermissionGranted() {
+        // TODO
+    }
+
+    override fun readContactsPermissionDenied() {
+        view?.showPermissionDeniedLayout()
+    }
+
+    override fun askForContactsPermissionClick() {
+        view?.askForReadContactsPermission()
     }
 
 }

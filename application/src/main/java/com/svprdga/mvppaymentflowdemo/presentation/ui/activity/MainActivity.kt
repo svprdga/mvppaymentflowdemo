@@ -1,9 +1,14 @@
 package com.svprdga.mvppaymentflowdemo.presentation.ui.activity
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.graphics.Point
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
+import android.view.View
 import com.svprdga.mvppaymentflowdemo.R
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.abstraction.IMainPresenter
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.view.IMainView
@@ -13,6 +18,8 @@ import javax.inject.Inject
 const val TAG_MAIN = "main"
 
 private const val ANIMATION_DURATION_MS = 250L
+
+private const val PERMISSION_READ_CONTACTS = 1001
 
 class MainActivity : BaseActivity(), IMainView {
 
@@ -34,22 +41,14 @@ class MainActivity : BaseActivity(), IMainView {
         // DI.
         getUiComponent(TAG_MAIN).inject(this)
 
+        // Toolbar.
+        setSupportActionBar(toolbar)
+
+        // Prepare animations.
         calculateWindowWidth()
         prepareLayoutsForAnimations()
 
-        val handler = Handler()
-        handler.postDelayed({
-            animateContactsToAmount()
-        }, 3000)
-        handler.postDelayed({
-            animateAmountToSubmit()
-        }, 6000)
-        handler.postDelayed({
-            animateSubmitToAmount()
-        }, 9000)
-        handler.postDelayed({
-            animateAmountToContacts()
-        }, 12000)
+        setListeners()
 
         presenter.bind(this)
     }
@@ -70,6 +69,31 @@ class MainActivity : BaseActivity(), IMainView {
         super.onDestroy()
 
         presenter.unBind()
+    }
+
+    // ************************************* PUBLIC METHODS ************************************ //
+
+    override fun askForReadContactsPermission() {
+        ActivityCompat.requestPermissions(this,
+            arrayOf(Manifest.permission.READ_CONTACTS),
+            PERMISSION_READ_CONTACTS)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int,
+                                            permissions: Array<String>,
+                                            grantResults: IntArray) {
+
+        if (requestCode == PERMISSION_READ_CONTACTS) {
+            if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                presenter.readContactsPermissionGranted()
+            } else {
+                presenter.readContactsPermissionDenied()
+            }
+        }
+    }
+
+    override fun showPermissionDeniedLayout() {
+        noPermissionsLayout.visibility = View.VISIBLE
     }
 
     // ************************************ PRIVATE METHODS ************************************ //
@@ -121,4 +145,13 @@ class MainActivity : BaseActivity(), IMainView {
             .translationXBy(windowWidth)
             .duration = ANIMATION_DURATION_MS
     }
+
+    private fun setListeners() {
+        allowContactsPermissionButton.setOnClickListener(allowContactsPermissionListener)
+    }
+
+    // ************************************** UI LISTENERS ************************************* //
+
+    private val allowContactsPermissionListener: View.OnClickListener
+        get() = View.OnClickListener { presenter.askForContactsPermissionClick() }
 }

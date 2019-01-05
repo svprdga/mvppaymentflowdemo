@@ -1,10 +1,13 @@
 package com.svprdga.mvppaymentflowdemo.presentation.presenter
 
+import com.svprdga.mvppaymentflowdemo.data.ContactDataSource
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.abstraction.IContactsPresenter
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.view.IContactsView
 import com.svprdga.mvppaymentflowdemo.util.Logger
 
-class ContactPresenter(logger: Logger): BasePresenter(logger), IContactsPresenter {
+class ContactsPresenter(
+    logger: Logger)
+    : BasePresenter(logger), IContactsPresenter {
 
     // ****************************************** VARS ***************************************** //
 

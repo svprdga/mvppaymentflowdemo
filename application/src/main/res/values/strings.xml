@@ -1,3 +1,13 @@
 <resources>
-    <string name="app_name">MVPPaymentFlowDemo</string>
+
+    <string name="app_name">MVP Payment Flow Demo</string>
+
+    <!--Main-->
+    <string name="mainActivity_contactsPermissionDenied_title">Read contacts permission</string>
+    <string name="mainActivity_contactsPermissionDenied_h0">This application uses your contact information to provide you a way to manage your payments.</string>
+    <string name="mainActivity_contactsPermissionDenied_h1">This information is not sent to any place.</string>
+    <string name="mainActivity_contactsPermissionDenied_button">Allow access</string>
+
+
+
 </resources>
