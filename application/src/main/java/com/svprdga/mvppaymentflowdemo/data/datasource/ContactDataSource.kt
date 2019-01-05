@@ -1,4 +1,4 @@
-package com.svprdga.mvppaymentflowdemo.data
+package com.svprdga.mvppaymentflowdemo.data.datasource
 
 import android.content.Context
 import android.provider.ContactsContract
@@ -19,6 +19,10 @@ object All {
         ContactsContract.Contacts.DISPLAY_NAME,
         ContactsContract.CommonDataKinds.Phone.NUMBER,
         ContactsContract.CommonDataKinds.Phone.PHOTO_URI)
+
+    const val WHERE = "${ContactsContract.Data.MIMETYPE} = ?"
+
+    val SELECTION = arrayOf(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)
 }
 
 @Mockable
@@ -44,8 +48,8 @@ class ContactDataSource(private val context: Context) {
         val cursor = context.contentResolver.query(
             ContactsContract.Data.CONTENT_URI,
             All.PROJECTION,
-            null,
-            null,
+            All.WHERE,
+            All.SELECTION,
             null)
 
         val list = mutableListOf<Contact>()

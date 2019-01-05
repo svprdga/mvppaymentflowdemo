@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainLinearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/entryLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:clickable="true"
+        android:background="@drawable/selector_button_0">
+
+        <RelativeLayout
+            android:layout_width="72dp"
+            android:layout_height="match_parent">
+
+            <com.svprdga.mvppaymentflowdemo.presentation.custom.RoundedImageView
+                android:id="@+id/avatarRoundedImageView"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:scaleType="center"
+                android:layout_marginLeft="16dp"
+                android:layout_centerVertical="true"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:id="@+id/avatarImageView"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:scaleType="center"
+                android:layout_marginLeft="16dp"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/img_default_avatar"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/contactNameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="name"
+                    android:textColor="@color/primaryTextLight"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/contactDetailsTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/secondaryTextLight"
+                    android:textSize="14sp"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/bottomDividerView"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/dividerLight"
+        android:visibility="invisible"
+        android:layout_marginStart="72dp"/>
+
+</LinearLayout>

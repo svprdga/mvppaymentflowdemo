@@ -1,12 +1,11 @@
 package com.svprdga.mvppaymentflowdemo.presentation.presenter
 
-import com.svprdga.mvppaymentflowdemo.data.ContactDataSource
+import com.svprdga.mvppaymentflowdemo.data.datasource.ContactDataSource
 import com.svprdga.mvppaymentflowdemo.presentation.eventbus.MainBus
 import com.svprdga.mvppaymentflowdemo.presentation.eventbus.MainEvent
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.abstraction.IContactsPresenter
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.view.IContactsView
 import com.svprdga.mvppaymentflowdemo.util.Logger
-import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
@@ -14,7 +13,8 @@ import io.reactivex.schedulers.Schedulers
 class ContactsPresenter(
     logger: Logger,
     private val mainBus: MainBus,
-    private val contactDataSource: ContactDataSource)
+    private val contactDataSource: ContactDataSource
+)
     : BasePresenter(logger), IContactsPresenter {
 
     // ****************************************** VARS ***************************************** //
@@ -71,7 +71,8 @@ class ContactsPresenter(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { contacts ->
-                val a = 0
+                view?.hideLoading()
+                view?.showContacts(contacts)
             }
     }
 

@@ -1,6 +1,6 @@
 package com.svprdga.mvppaymentflowdemo.di.module
 
-import com.svprdga.mvppaymentflowdemo.data.ContactDataSource
+import com.svprdga.mvppaymentflowdemo.data.datasource.ContactDataSource
 import com.svprdga.mvppaymentflowdemo.di.annotation.PerUiComponent
 import com.svprdga.mvppaymentflowdemo.presentation.eventbus.MainBus
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.AmountPresenter
@@ -29,7 +29,8 @@ class PresenterModule {
     @Provides
     @PerUiComponent
     fun provideContactPresenter(logger: Logger, mainBus: MainBus,
-                                contactDataSource: ContactDataSource): IContactsPresenter {
+                                contactDataSource: ContactDataSource
+    ): IContactsPresenter {
         return ContactsPresenter(logger, mainBus, contactDataSource)
     }
 
