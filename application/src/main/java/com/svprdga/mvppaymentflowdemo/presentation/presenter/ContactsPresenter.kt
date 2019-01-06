@@ -86,6 +86,8 @@ class ContactsPresenter(
                 view?.hideLoading()
                 view?.showContacts(contacts)
             }
+
+        // TODO: Must load Marvel API characters too
     }
 
     private fun unselectAllContacts() {

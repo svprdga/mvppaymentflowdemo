@@ -10,6 +10,7 @@ import android.support.test.espresso.IdlingResource;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 import com.svprdga.birthdays.di.component.AppComponent;
 import com.svprdga.birthdays.di.component.UiComponent;
@@ -217,6 +218,22 @@ public abstract class BaseActivity extends AppCompatActivity implements IdlingRe
      */
     protected boolean isIdle(){
         return mIdle;
+    }
+
+    /**
+     * Method that close the keyboard.
+     */
+    protected void closeKeyboard() {
+
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm =
+                    (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm != null) {
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
+            view.clearFocus();
+        }
     }
 
 

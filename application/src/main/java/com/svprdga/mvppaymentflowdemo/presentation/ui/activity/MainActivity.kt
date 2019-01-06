@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.view.View
+import android.view.WindowManager
 import com.svprdga.mvppaymentflowdemo.R
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.abstraction.IMainPresenter
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.view.ButtonState
@@ -44,6 +45,9 @@ class MainActivity : BaseActivity(), IMainView {
         // Toolbar.
         toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.primaryTextDark))
         setSupportActionBar(toolbar)
+
+        // Prevent the keyboard from opening at startup.
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         // Prepare animations.
         calculateWindowWidth()
@@ -193,6 +197,10 @@ class MainActivity : BaseActivity(), IMainView {
         super.finish()
     }
 
+    override fun closeKeyboard() {
+        super.closeKeyboard()
+    }
+
     // ************************************ PRIVATE METHODS ************************************ //
 
     private fun calculateWindowWidth() {
@@ -210,6 +218,7 @@ class MainActivity : BaseActivity(), IMainView {
     private fun setListeners() {
         allowContactsPermissionButton.setOnClickListener(allowContactsPermissionListener)
         nextButton.setOnClickListener(nextListener)
+        backButton.setOnClickListener(backListener)
     }
 
     // ************************************** UI LISTENERS ************************************* //
@@ -219,4 +228,7 @@ class MainActivity : BaseActivity(), IMainView {
 
     private val nextListener: View.OnClickListener
         get() = View.OnClickListener { presenter.clickNext() }
+
+    private val backListener: View.OnClickListener
+        get() = View.OnClickListener { presenter.clickBack() }
 }

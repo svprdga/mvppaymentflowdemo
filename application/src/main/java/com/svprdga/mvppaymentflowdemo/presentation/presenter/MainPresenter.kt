@@ -13,7 +13,7 @@ import io.reactivex.observers.DisposableObserver
 enum class Screen {
     CONTACTS,
     AMOUNT,
-    TOTAL
+    SUBMIT
 }
 
 class MainPresenter(
@@ -21,37 +21,60 @@ class MainPresenter(
     private val permissionHelper: PermissionHelper,
     private val mainBus: MainBus,
     private val textProvider: TextProvider,
-    private val contactsBus: ContactsBus)
-    : BasePresenter(logger), IMainPresenter {
+    private val contactsBus: ContactsBus,
+    private val amountBus: AmountBus
+) : BasePresenter(logger), IMainPresenter {
 
     // ****************************************** VARS ***************************************** //
 
     private var view: IMainView? = null
     private var screen: Screen = Screen.CONTACTS
     private var selectedContacts = ArrayList<Contact>()
+    private var inputAmount = 0f
 
     // ************************************* CALLBACK VARS ************************************* //
 
     private val contactsDisposable: DisposableObserver<ArrayList<Contact>>
-    get() = object : DisposableObserver<ArrayList<Contact>>() {
-        override fun onNext(contacts: ArrayList<Contact>) {
-            selectedContacts = contacts
+        get() = object : DisposableObserver<ArrayList<Contact>>() {
+            override fun onNext(contacts: ArrayList<Contact>) {
+                selectedContacts = contacts
+                navBarContacts()
+            }
 
-            if (selectedContacts.isEmpty()) {
-                view?.setNextButtonState(ButtonState.DISABLED)
-            } else {
-                view?.setNextButtonState(ButtonState.ENABLED)
+            override fun onError(e: Throwable) {
+                // nothing.
+            }
+
+            override fun onComplete() {
+                // nothing
             }
         }
 
-        override fun onError(e: Throwable) {
-            // nothing.
-        }
+    private val amountDisposable: DisposableObserver<AmountData>
+        get() = object : DisposableObserver<AmountData>() {
+            override fun onNext(data: AmountData) {
+                when(data.event) {
+                    AmountEvent.SET_AMOUNT -> {
+                        data.amount?.let {
+                            inputAmount = it
+                            navBarAmount()
+                        }
+                    }
+                    AmountEvent.NEXT -> {
+                        if (inputAmount > 0f) goToSubmitScreen()
+                    }
+                }
 
-        override fun onComplete() {
-            // nothing
+            }
+
+            override fun onError(e: Throwable) {
+                // Nothing.
+            }
+
+            override fun onComplete() {
+                // Nothing.
+            }
         }
-    }
 
     // ************************************* PUBLIC METHODS ************************************ //
 
@@ -65,17 +88,17 @@ class MainPresenter(
         }
 
         contactsBus.getData().subscribe(contactsDisposable)
+        amountBus.getData().subscribe(amountDisposable)
 
         // Initialize bottom navigation bar.
-        view?.setBackButtonState(ButtonState.INVISIBLE)
-        view?.setNextButtonState(ButtonState.DISABLED)
-        view?.setStatusText(textProvider.contactStatus)
+        navBarContacts()
     }
 
     override fun unBind() {
         view = null
 
         contactsDisposable.dispose()
+        amountDisposable.dispose()
     }
 
     override fun onStartView() {
@@ -101,7 +124,7 @@ class MainPresenter(
     }
 
     override fun backPressed() {
-        when(screen) {
+        when (screen) {
             Screen.CONTACTS -> {
                 if (selectedContacts.isEmpty()) {
                     view?.finish()
@@ -114,15 +137,76 @@ class MainPresenter(
     }
 
     override fun clickNext() {
-        when(screen) {
+        when (screen) {
             Screen.CONTACTS -> goToAmountScreen()
+            Screen.AMOUNT -> goToSubmitScreen()
+        }
+    }
+
+    override fun clickBack() {
+        when (screen) {
+            Screen.AMOUNT -> returnToContactsScreen()
+            Screen.SUBMIT -> returnToAmountScreen()
         }
     }
 
     // ************************************ PRIVATE METHODS ************************************ //
 
-    private fun goToAmountScreen(){
+    private fun goToAmountScreen() {
         view?.animateContactsToAmount()
+        navBarAmount()
+        screen = Screen.AMOUNT
+    }
+
+    private fun returnToContactsScreen() {
+        view?.animateAmountToContacts()
+        navBarContacts()
+        screen = Screen.CONTACTS
+    }
+
+    private fun goToSubmitScreen() {
+        view?.animateAmountToSubmit()
+        view?.closeKeyboard()
+        navBarSubmit()
+        screen = Screen.SUBMIT
+    }
+
+    private fun returnToAmountScreen() {
+        view?.animateSubmitToAmount()
+        navBarAmount()
+        screen = Screen.AMOUNT
+    }
+
+    /**
+     * Set the bottom navigation bar to its correct state for the contacts layout.
+     */
+    private fun navBarContacts() {
+        view?.setBackButtonState(ButtonState.INVISIBLE)
+        if (selectedContacts.isEmpty()) {
+            view?.setNextButtonState(ButtonState.DISABLED)
+        } else {
+            view?.setNextButtonState(ButtonState.ENABLED)
+        }
+        view?.setStatusText(textProvider.contactStatus)
+    }
+
+    /**
+     * Set the bottom navigation bar to its correct state for the amount layout.
+     */
+    private fun navBarAmount() {
+        view?.setBackButtonState(ButtonState.ENABLED)
+        if (inputAmount > 0) view?.setNextButtonState(ButtonState.ENABLED)
+        else view?.setNextButtonState(ButtonState.DISABLED)
+        view?.setStatusText(textProvider.amountStatus)
+    }
+
+    /**
+     * Set the bottom navigation bar to its correct state for the submit layout.
+     */
+    private fun navBarSubmit() {
+        view?.setBackButtonState(ButtonState.ENABLED)
+        view?.setNextButtonState(ButtonState.INVISIBLE)
+        view?.setStatusText(textProvider.totalStatus)
     }
 
 }

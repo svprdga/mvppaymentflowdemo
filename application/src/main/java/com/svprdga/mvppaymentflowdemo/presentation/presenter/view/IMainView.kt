@@ -32,4 +32,6 @@ interface IMainView : IView {
 
     fun finish()
 
+    fun closeKeyboard()
+
 }

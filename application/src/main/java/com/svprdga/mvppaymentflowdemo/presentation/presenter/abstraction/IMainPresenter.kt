@@ -20,4 +20,9 @@ interface IMainPresenter : IPresenter<IMainView> {
      */
     fun clickNext()
 
+    /**
+     * The user clicked in the back button.
+     */
+    fun clickBack()
+
 }
