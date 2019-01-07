@@ -3,6 +3,7 @@ package com.svprdga.mvppaymentflowdemo.presentation.presenter
 import com.svprdga.mvppaymentflowdemo.domain.model.Contact
 import com.svprdga.mvppaymentflowdemo.presentation.eventbus.*
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.abstraction.IMainPresenter
+import com.svprdga.mvppaymentflowdemo.presentation.presenter.view.BulletState
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.view.ButtonState
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.view.IMainView
 import com.svprdga.mvppaymentflowdemo.util.Logger
@@ -187,7 +188,12 @@ class MainPresenter(
         } else {
             view?.setNextButtonState(ButtonState.ENABLED)
         }
+
         view?.setStatusText(textProvider.contactStatus)
+
+        view?.setContactsBulletState(BulletState.ENABLED)
+        view?.setAmountBulletState(BulletState.DISABLED)
+        view?.setSubmitBulletState(BulletState.DISABLED)
     }
 
     /**
@@ -197,7 +203,12 @@ class MainPresenter(
         view?.setBackButtonState(ButtonState.ENABLED)
         if (inputAmount > 0) view?.setNextButtonState(ButtonState.ENABLED)
         else view?.setNextButtonState(ButtonState.DISABLED)
+
         view?.setStatusText(textProvider.amountStatus)
+
+        view?.setContactsBulletState(BulletState.DISABLED)
+        view?.setAmountBulletState(BulletState.ENABLED)
+        view?.setSubmitBulletState(BulletState.DISABLED)
     }
 
     /**
@@ -206,7 +217,12 @@ class MainPresenter(
     private fun navBarSubmit() {
         view?.setBackButtonState(ButtonState.ENABLED)
         view?.setNextButtonState(ButtonState.INVISIBLE)
+
         view?.setStatusText(textProvider.totalStatus)
+
+        view?.setContactsBulletState(BulletState.DISABLED)
+        view?.setAmountBulletState(BulletState.DISABLED)
+        view?.setSubmitBulletState(BulletState.ENABLED)
     }
 
 }

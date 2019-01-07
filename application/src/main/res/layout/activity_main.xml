@@ -212,7 +212,8 @@
         android:layout_marginEnd="12dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.2"/>
 
     <ImageButton
         android:id="@+id/nextButton"
@@ -224,5 +225,33 @@
         app:layout_constraintEnd_toEndOf="@id/bottomView"
         app:layout_constraintTop_toTopOf="@id/bottomView"
         android:layout_marginEnd="14dp"/>
+
+    <ImageView
+        android:id="@+id/contactsBullet"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:background="@drawable/shape_bullet_inactive"
+        app:layout_constraintTop_toTopOf="@+id/amountBullet"
+        app:layout_constraintEnd_toStartOf="@+id/amountBullet"
+        android:layout_marginEnd="18dp"/>
+
+    <ImageView
+        android:id="@+id/amountBullet"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:background="@drawable/shape_bullet_inactive"
+        app:layout_constraintTop_toBottomOf="@+id/statusText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="12dp"/>
+
+    <ImageView
+        android:id="@+id/submitBullet"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:background="@drawable/shape_bullet_inactive"
+        app:layout_constraintTop_toTopOf="@+id/amountBullet"
+        app:layout_constraintStart_toEndOf="@+id/amountBullet"
+        android:layout_marginStart="18dp"/>
 
 </android.support.constraint.ConstraintLayout>

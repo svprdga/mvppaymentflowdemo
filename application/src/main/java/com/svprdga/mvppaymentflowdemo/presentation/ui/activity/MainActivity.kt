@@ -11,6 +11,7 @@ import android.view.View
 import android.view.WindowManager
 import com.svprdga.mvppaymentflowdemo.R
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.abstraction.IMainPresenter
+import com.svprdga.mvppaymentflowdemo.presentation.presenter.view.BulletState
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.view.ButtonState
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.view.IMainView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -79,14 +80,18 @@ class MainActivity : BaseActivity(), IMainView {
     // ************************************* PUBLIC METHODS ************************************ //
 
     override fun askForReadContactsPermission() {
-        ActivityCompat.requestPermissions(this,
+        ActivityCompat.requestPermissions(
+            this,
             arrayOf(Manifest.permission.READ_CONTACTS),
-            PERMISSION_READ_CONTACTS)
+            PERMISSION_READ_CONTACTS
+        )
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int,
-                                            permissions: Array<String>,
-                                            grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
 
         if (requestCode == PERMISSION_READ_CONTACTS) {
             if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -114,18 +119,20 @@ class MainActivity : BaseActivity(), IMainView {
     }
 
     override fun setBackButtonState(state: ButtonState) {
-        when(state) {
+        when (state) {
             ButtonState.DISABLED -> {
                 backButton.visibility = View.VISIBLE
                 backButton.isEnabled = false
                 backButton.imageTintList = ColorStateList.valueOf(
-                    ContextCompat.getColor(this, R.color.hintDisabledTextDark))
+                    ContextCompat.getColor(this, R.color.hintDisabledTextDark)
+                )
             }
             ButtonState.ENABLED -> {
                 backButton.visibility = View.VISIBLE
                 backButton.isEnabled = true
                 backButton.imageTintList = ColorStateList.valueOf(
-                    ContextCompat.getColor(this, R.color.primaryTextDark))
+                    ContextCompat.getColor(this, R.color.primaryTextDark)
+                )
             }
             else -> {
                 backButton.visibility = View.INVISIBLE
@@ -134,18 +141,20 @@ class MainActivity : BaseActivity(), IMainView {
     }
 
     override fun setNextButtonState(state: ButtonState) {
-        when(state) {
+        when (state) {
             ButtonState.DISABLED -> {
                 nextButton.visibility = View.VISIBLE
                 nextButton.isEnabled = false
                 nextButton.imageTintList = ColorStateList.valueOf(
-                    ContextCompat.getColor(this, R.color.hintDisabledTextDark))
+                    ContextCompat.getColor(this, R.color.hintDisabledTextDark)
+                )
             }
             ButtonState.ENABLED -> {
                 nextButton.visibility = View.VISIBLE
                 nextButton.isEnabled = true
                 nextButton.imageTintList = ColorStateList.valueOf(
-                    ContextCompat.getColor(this, R.color.primaryTextDark))
+                    ContextCompat.getColor(this, R.color.primaryTextDark)
+                )
             }
             else -> {
                 nextButton.visibility = View.INVISIBLE
@@ -199,6 +208,39 @@ class MainActivity : BaseActivity(), IMainView {
 
     override fun closeKeyboard() {
         super.closeKeyboard()
+    }
+
+    override fun setContactsBulletState(state: BulletState) {
+        when (state) {
+            BulletState.ENABLED ->
+                contactsBullet.background =
+                        ContextCompat.getDrawable(this, R.drawable.shape_bullet_active)
+            else ->
+                contactsBullet.background =
+                        ContextCompat.getDrawable(this, R.drawable.shape_bullet_inactive)
+        }
+    }
+
+    override fun setAmountBulletState(state: BulletState) {
+        when (state) {
+            BulletState.ENABLED ->
+                amountBullet.background =
+                        ContextCompat.getDrawable(this, R.drawable.shape_bullet_active)
+            else ->
+                amountBullet.background =
+                        ContextCompat.getDrawable(this, R.drawable.shape_bullet_inactive)
+        }
+    }
+
+    override fun setSubmitBulletState(state: BulletState) {
+        when (state) {
+            BulletState.ENABLED ->
+                submitBullet.background =
+                        ContextCompat.getDrawable(this, R.drawable.shape_bullet_active)
+            else ->
+                submitBullet.background =
+                        ContextCompat.getDrawable(this, R.drawable.shape_bullet_inactive)
+        }
     }
 
     // ************************************ PRIVATE METHODS ************************************ //

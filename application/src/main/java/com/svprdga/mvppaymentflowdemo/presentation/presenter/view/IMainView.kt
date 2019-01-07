@@ -6,6 +6,11 @@ enum class ButtonState {
     DISABLED
 }
 
+enum class BulletState {
+    ENABLED,
+    DISABLED
+}
+
 interface IMainView : IView {
 
     fun askForReadContactsPermission()
@@ -33,5 +38,11 @@ interface IMainView : IView {
     fun finish()
 
     fun closeKeyboard()
+
+    fun setContactsBulletState(state: BulletState)
+
+    fun setAmountBulletState(state: BulletState)
+
+    fun setSubmitBulletState(state: BulletState)
 
 }
