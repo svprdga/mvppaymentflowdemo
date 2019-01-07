@@ -100,7 +100,6 @@ class ContactViewHolder(view: View)
             selected = false
         }
     }
-
 }
 
 /**
