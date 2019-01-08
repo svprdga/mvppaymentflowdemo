@@ -60,3 +60,6 @@ fastlane/readme.md
 
 # Backup folders.
 projectFilesBackup/
+
+# Keys file
+Keys.kt
