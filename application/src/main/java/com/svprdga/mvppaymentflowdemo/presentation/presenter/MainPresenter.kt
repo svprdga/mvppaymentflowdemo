@@ -62,7 +62,9 @@ class MainPresenter(
                         }
                     }
                     AmountEvent.NEXT -> {
-                        if (inputAmount > 0f) goToSubmitScreen()
+                        if (inputAmount > 0f) {
+                            goToSubmitScreen()
+                        }
                     }
                 }
 
@@ -112,7 +114,7 @@ class MainPresenter(
 
     override fun readContactsPermissionGranted() {
         view?.hidePermissionDeniedLayout()
-        mainBus.setEvent(MainEvent.LOAD_CONTACTS)
+        mainBus.setData(MainData(event = MainEvent.LOAD_CONTACTS))
         view?.showMainLayouts()
     }
 
@@ -130,7 +132,7 @@ class MainPresenter(
                 if (selectedContacts.isEmpty()) {
                     view?.finish()
                 } else {
-                    mainBus.setEvent(MainEvent.UNSELECT_ALL)
+                    mainBus.setData(MainData(event = MainEvent.UNSELECT_ALL))
                 }
             }
             else -> view?.finish()
@@ -166,6 +168,9 @@ class MainPresenter(
     }
 
     private fun goToSubmitScreen() {
+        mainBus.setData(MainData(
+            MainEvent.SHOW_RESULTS, selectedContacts, inputAmount))
+
         view?.animateAmountToSubmit()
         view?.closeKeyboard()
         navBarSubmit()

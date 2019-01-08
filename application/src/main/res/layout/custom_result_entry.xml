@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/customResultEntry_mainLinearLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="72dp"
     android:orientation="vertical">
 
     <LinearLayout
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/primaryTextLight"
             android:text="name"
-            android:textSize="20sp"
+            android:textSize="14sp"
             android:maxLength="30"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"/>
@@ -52,7 +52,7 @@
             android:id="@+id/customResultEntry_amountTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/primaryTextLight"
             android:textStyle="bold"
             android:textSize="20sp"
             android:text="amount"

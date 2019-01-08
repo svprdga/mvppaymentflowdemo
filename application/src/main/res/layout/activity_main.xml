@@ -184,7 +184,7 @@
         android:id="@+id/bottomView"
         android:layout_width="match_parent"
         android:layout_height="75dp"
-        android:background="@color/colorPrimaryLight"
+        android:background="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <ImageButton

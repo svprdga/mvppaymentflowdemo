@@ -1,12 +1,16 @@
 package com.svprdga.mvppaymentflowdemo.presentation.ui.fragment
 
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.svprdga.mvppaymentflowdemo.R
+import com.svprdga.mvppaymentflowdemo.domain.model.ResultContact
+import com.svprdga.mvppaymentflowdemo.presentation.custom.ResultListAdapter
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.abstraction.ISubmitPresenter
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.view.ISubmitView
+import kotlinx.android.synthetic.main.fragment_submit.*
 import javax.inject.Inject
 
 const val TAG_SUBMIT = "submit";
@@ -17,6 +21,10 @@ class SubmitFragment : BaseFragment(), ISubmitView {
 
     @Inject
     lateinit var presenter: ISubmitPresenter
+
+    // ****************************************** VARS ***************************************** //
+
+    private var adapter: ResultListAdapter? = null
 
     // *************************************** LIFECYCLE *************************************** //
 
@@ -36,6 +44,14 @@ class SubmitFragment : BaseFragment(), ISubmitView {
         super.onDestroy()
 
         presenter.unBind()
+    }
+
+    // ************************************* PUBLIC METHODS ************************************ //
+
+    override fun displayResults(results: List<ResultContact>) {
+        recyclerView.layoutManager = LinearLayoutManager(activity)
+        adapter = ResultListAdapter(results)
+        recyclerView.adapter = adapter
     }
 
 }

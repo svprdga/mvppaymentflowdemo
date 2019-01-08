@@ -10,8 +10,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.svprdga.mvppaymentflowdemo.R
 import com.svprdga.mvppaymentflowdemo.domain.model.Contact
-
-data class ResultContact(val contact: Contact, val amount: Float)
+import com.svprdga.mvppaymentflowdemo.domain.model.ResultContact
+import java.text.NumberFormat
 
 class ResultViewHolder(view: View)
     : RecyclerView.ViewHolder(view) {
@@ -48,7 +48,8 @@ class ResultViewHolder(view: View)
     fun initializeView(contact: Contact, amount: Float) {
 
         nameTextView.text = contact.name
-        amountTextView.text = amount.toString()
+        val format = NumberFormat.getCurrencyInstance()
+        amountTextView.text = "${format.format(amount)}"
 
         if (contact.avatarPath != null) {
 

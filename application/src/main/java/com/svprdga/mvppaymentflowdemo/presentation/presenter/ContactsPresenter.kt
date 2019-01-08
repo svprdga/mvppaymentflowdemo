@@ -24,11 +24,11 @@ class ContactsPresenter(
 
     // ************************************* CALLBACK VARS ************************************* //
 
-    private val mainDisposable: DisposableObserver<MainEvent>
-        get() = object : DisposableObserver<MainEvent>() {
-            override fun onNext(event: MainEvent) {
-                if (event == MainEvent.LOAD_CONTACTS) loadContacts()
-                else if (event == MainEvent.UNSELECT_ALL) unselectAllContacts()
+    private val mainDisposable: DisposableObserver<MainData>
+        get() = object : DisposableObserver<MainData>() {
+            override fun onNext(result: MainData) {
+                if (result.event == MainEvent.LOAD_CONTACTS) loadContacts()
+                else if (result.event == MainEvent.UNSELECT_ALL) unselectAllContacts()
             }
 
             override fun onError(e: Throwable) {
@@ -46,7 +46,7 @@ class ContactsPresenter(
     override fun bind(view: IContactsView) {
         this.view = view
 
-        mainBus.getEvent().subscribe(mainDisposable)
+        mainBus.getData().subscribe(mainDisposable)
     }
 
     override fun unBind() {

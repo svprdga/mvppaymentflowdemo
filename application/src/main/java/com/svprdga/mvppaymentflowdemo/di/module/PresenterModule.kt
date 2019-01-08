@@ -47,7 +47,7 @@ class PresenterModule {
 
     @Provides
     @PerUiComponent
-    fun provideSubmitPresenter(logger: Logger): ISubmitPresenter {
-        return SubmitPresenter(logger)
+    fun provideSubmitPresenter(logger: Logger, mainBus: MainBus): ISubmitPresenter {
+        return SubmitPresenter(logger, mainBus)
     }
 }
