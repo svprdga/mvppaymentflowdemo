@@ -6,4 +6,6 @@ interface ISubmitView : IView {
 
     fun displayResults(results: List<ResultContact>)
 
+    fun displayTotalAmount(amount: Float)
+
 }

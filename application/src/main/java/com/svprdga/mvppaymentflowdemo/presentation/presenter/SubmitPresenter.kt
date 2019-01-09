@@ -68,6 +68,7 @@ class SubmitPresenter(
         }
 
         view?.displayResults(resultList)
+        view?.displayTotalAmount(amount)
     }
 
 }

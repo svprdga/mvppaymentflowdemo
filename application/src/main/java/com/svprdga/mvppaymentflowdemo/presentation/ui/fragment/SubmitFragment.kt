@@ -11,6 +11,7 @@ import com.svprdga.mvppaymentflowdemo.presentation.custom.ResultListAdapter
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.abstraction.ISubmitPresenter
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.view.ISubmitView
 import kotlinx.android.synthetic.main.fragment_submit.*
+import java.text.NumberFormat
 import javax.inject.Inject
 
 const val TAG_SUBMIT = "submit";
@@ -52,6 +53,11 @@ class SubmitFragment : BaseFragment(), ISubmitView {
         recyclerView.layoutManager = LinearLayoutManager(activity)
         adapter = ResultListAdapter(results)
         recyclerView.adapter = adapter
+    }
+
+    override fun displayTotalAmount(amount: Float) {
+        val format = NumberFormat.getCurrencyInstance()
+        totalAmountText.text = "${format.format(amount)}"
     }
 
 }
