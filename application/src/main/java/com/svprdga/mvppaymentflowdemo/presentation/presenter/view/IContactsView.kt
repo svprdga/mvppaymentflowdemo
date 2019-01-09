@@ -1,7 +1,6 @@
 package com.svprdga.mvppaymentflowdemo.presentation.presenter.view
 
 import com.svprdga.mvppaymentflowdemo.domain.model.Contact
-import java.util.*
 
 interface IContactsView : IView {
 
@@ -12,5 +11,9 @@ interface IContactsView : IView {
     fun showContacts(contacts: List<Contact>)
 
     fun unselectAllViews()
+
+    fun showErrorLayout()
+
+    fun hideErrorLayout()
 
 }

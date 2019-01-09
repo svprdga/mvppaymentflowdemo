@@ -4,8 +4,7 @@ import android.content.Context
 import android.provider.ContactsContract
 import com.svprdga.mvppaymentflowdemo.domain.extra.Mockable
 import com.svprdga.mvppaymentflowdemo.domain.model.Contact
-import io.reactivex.Single
-import io.reactivex.SingleObserver
+import io.reactivex.Observable
 
 object All {
 
@@ -32,13 +31,12 @@ class ContactDataSource(private val context: Context) {
 
     /**
      * Fetch all contacts.
-     * @return A [Single] with a [List] of all [Contact].
+     * @return An [Observable] with a [List] of all [Contact].
      */
-    fun getAllContacts(): Single<List<Contact>> {
-        return object : Single<List<Contact>>() {
-            override fun subscribeActual(observer: SingleObserver<in List<Contact>>) {
-                observer.onSuccess(obtainAllContacts())
-            }
+    fun getAllContacts(): Observable<List<Contact>> {
+        return Observable.create{
+            it.onNext(obtainAllContacts())
+            it.onComplete()
         }
     }
 

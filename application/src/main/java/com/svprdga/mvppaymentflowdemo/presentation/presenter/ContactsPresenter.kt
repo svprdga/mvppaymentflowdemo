@@ -1,6 +1,5 @@
 package com.svprdga.mvppaymentflowdemo.presentation.presenter
 
-import android.os.Handler
 import com.svprdga.mvppaymentflowdemo.data.datasource.ContactDataSource
 import com.svprdga.mvppaymentflowdemo.data.network.client.ApiClient
 import com.svprdga.mvppaymentflowdemo.domain.model.Contact
@@ -9,16 +8,20 @@ import com.svprdga.mvppaymentflowdemo.presentation.presenter.abstraction.IContac
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.view.IContactsView
 import com.svprdga.mvppaymentflowdemo.util.Logger
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
+import java.util.*
+
+private const val API_CHAR_LIMIT = 50
 
 class ContactsPresenter(
     logger: Logger,
     private val mainBus: MainBus,
     private val contactDataSource: ContactDataSource,
     private val contactsBus: ContactsBus,
-    private val apiClient: ApiClient)
-    : BasePresenter(logger), IContactsPresenter {
+    private val apiClient: ApiClient
+) : BasePresenter(logger), IContactsPresenter {
 
     // ****************************************** VARS ***************************************** //
 
@@ -43,6 +46,25 @@ class ContactsPresenter(
             }
         }
 
+    private val disposable: DisposableObserver<List<Contact>> =
+        object : DisposableObserver<List<Contact>>() {
+
+            val mainList = ArrayList<Contact>()
+
+            override fun onNext(list: List<Contact>) {
+                mainList.addAll(list)
+            }
+
+            override fun onError(e: Throwable) {
+                view?.hideLoading()
+                view?.showErrorLayout()
+            }
+
+            override fun onComplete() {
+                view?.hideLoading()
+                view?.showContacts(mainList.sorted())
+            }
+        }
 
     // ************************************* PUBLIC METHODS ************************************ //
 
@@ -50,17 +72,13 @@ class ContactsPresenter(
         this.view = view
 
         mainBus.getData().subscribe(mainDisposable)
-
-        val thread = Thread() {
-            apiClient.getCharacters()
-        }.start()
-
     }
 
     override fun unBind() {
         view = null
 
         mainDisposable.dispose()
+        disposable.dispose()
     }
 
     override fun onStartView() {
@@ -90,12 +108,10 @@ class ContactsPresenter(
         contactDataSource.getAllContacts()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { contacts ->
-                view?.hideLoading()
-                view?.showContacts(contacts)
-            }
-
-        // TODO: Must load Marvel API characters too
+            .mergeWith(apiClient.getCharacters(API_CHAR_LIMIT))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(disposable)
     }
 
     private fun unselectAllContacts() {

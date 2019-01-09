@@ -3,6 +3,7 @@ package com.svprdga.mvppaymentflowdemo.di.module
 import com.google.gson.Gson
 import com.svprdga.mvppaymentflowdemo.BuildConfig
 import com.svprdga.mvppaymentflowdemo.data.network.client.ApiClient
+import com.svprdga.mvppaymentflowdemo.data.network.mapper.Mapper
 import com.svprdga.mvppaymentflowdemo.data.network.rx.SchedulersProvider
 import com.svprdga.mvppaymentflowdemo.util.CryptoUtils
 import dagger.Module
@@ -44,7 +45,7 @@ class NetworkModule {
             .baseUrl(baseUrl)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create(Gson()))
-//            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
     }
 
@@ -56,9 +57,15 @@ class NetworkModule {
 
     @Provides
     @Singleton
+    fun provideMapper(): Mapper {
+        return Mapper()
+    }
+
+    @Provides
+    @Singleton
     fun provideApiClient(schedulersProvider: SchedulersProvider, retrofit: Retrofit,
-                         cryptoUtils: CryptoUtils): ApiClient {
-        return ApiClient(retrofit, schedulersProvider, cryptoUtils)
+                         cryptoUtils: CryptoUtils, mapper: Mapper): ApiClient {
+        return ApiClient(retrofit, schedulersProvider, cryptoUtils, mapper)
     }
 
 }

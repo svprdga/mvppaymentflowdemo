@@ -73,6 +73,14 @@ class ContactsFragment : BaseFragment(), IContactsView {
         selectedEntries = ArrayList()
     }
 
+    override fun showErrorLayout() {
+        errorLayout.visibility = View.VISIBLE
+    }
+
+    override fun hideErrorLayout() {
+        errorLayout.visibility = View.GONE
+    }
+
     // ************************************** UI LISTENERS ************************************* //
 
     private val entryListener: ContactClickListener

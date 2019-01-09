@@ -20,6 +20,7 @@
     <color name="dividerDark">#1FFFFFFF</color>
     <color name="infoText">#00529B</color>
 
-    <!--Lists-->
+    <!--Other-->
     <color name="listEntrySelected">#2645b1fe</color>
+    <color name="error">#D8000C</color>
 </resources>

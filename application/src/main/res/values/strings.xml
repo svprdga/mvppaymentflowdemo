@@ -11,6 +11,9 @@
     <string name="mainActivity_amountStatus">Enter amount</string>
     <string name="mainActivity_totalStatus">Total result</string>
 
+    <!--Contacts-->
+    <string name="contactsFragment_error">Oops...something wrong happened :S</string>
+
     <!--Amount-->
     <string name="amountFragment_inputHint">0</string>
     <string name="amountFragment_infoText">Enter the total amount of money to divide the payment.</string>
