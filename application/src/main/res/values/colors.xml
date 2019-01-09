@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Material-->
+    <color name="colorPrimary">#45b1fe</color>
+    <color name="colorPrimaryDark">#0082ca</color>
+    <color name="colorPrimaryLight">#84e3ff</color>
+    <color name="colorAccent">@color/colorPrimary</color>
+    <color name="colorPrimaryDisabled">#AA45b1fe</color>
+
+    <!--Text-->
+    <color name="primaryTextLight">#DE000000</color>
+    <color name="secondaryTextLight">#8A000000</color>
+    <color name="hintDisabledTextLight">#61000000</color>
+    <color name="dividerLight">#1F000000</color>
+    <color name="activityBackgroundLight">#EDEDED</color>
+    <color name="primaryTextDark">#FFFFFF</color>
+    <color name="secondaryTextDark">#B3FFFFFF</color>
+    <color name="hintDisabledTextDark">#4DFFFFFF</color>
+    <color name="dividerDark">#1FFFFFFF</color>
+    <color name="infoText">#00529B</color>
+
+    <!--Other-->
+    <color name="listEntrySelected">#2645b1fe</color>
+    <color name="error">#D8000C</color>
+</resources>

@@ -1,0 +1,24 @@
+<resources>
+
+    <string name="app_name">MVP Payment Flow Demo</string>
+
+    <!--Main-->
+    <string name="mainActivity_contactsPermissionDenied_title">Read contacts permission</string>
+    <string name="mainActivity_contactsPermissionDenied_h0">This application uses your contact information to provide you a way to manage your payments.</string>
+    <string name="mainActivity_contactsPermissionDenied_h1">This information is not sent to any place.</string>
+    <string name="mainActivity_contactsPermissionDenied_button">Allow access</string>
+    <string name="mainActivity_contactsStatus">Select contacts</string>
+    <string name="mainActivity_amountStatus">Enter amount</string>
+    <string name="mainActivity_totalStatus">Total result</string>
+
+    <!--Contacts-->
+    <string name="contactsFragment_error">Oops...something wrong happened :S</string>
+
+    <!--Amount-->
+    <string name="amountFragment_inputHint">0</string>
+    <string name="amountFragment_infoText">Enter the total amount of money to divide the payment.</string>
+
+    <!--Submit-->
+    <string name="submitFragment_total">Total:</string>
+
+</resources>

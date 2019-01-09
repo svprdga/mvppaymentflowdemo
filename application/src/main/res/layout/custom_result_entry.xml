@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/customResultEntry_mainLinearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/customResultEntry_entryLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="72dp"
+            android:layout_height="match_parent">
+
+            <com.svprdga.mvppaymentflowdemo.presentation.custom.RoundedImageView
+                android:id="@+id/customResultEntry_avatarRoundedImageView"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:scaleType="center"
+                android:layout_marginLeft="16dp"
+                android:layout_centerVertical="true"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:id="@+id/customResultEntry_avatarImageView"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:scaleType="center"
+                android:layout_marginLeft="16dp"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/img_default_avatar"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/customResultEntry_nameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primaryTextLight"
+            android:text="name"
+            android:textSize="14sp"
+            android:maxLength="30"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/customResultEntry_amountTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primaryTextLight"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:text="amount"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/customResultEntry_bottomDividerView"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/dividerLight"
+        android:visibility="invisible"/>
+
+</LinearLayout>
