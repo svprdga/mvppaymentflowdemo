@@ -10,7 +10,6 @@ import com.svprdga.mvppaymentflowdemo.di.module.UiComponentModule;
 import com.svprdga.mvppaymentflowdemo.presentation.ui.activity.BaseActivity;
 import com.svprdga.mvppaymentflowdemo.presentation.ui.application.CoreApp;
 
-// TODO: Refactor to kotlin
 /**
  * Base fragment class for all fragments.
  */

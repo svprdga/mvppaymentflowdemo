@@ -21,7 +21,6 @@ import com.svprdga.mvppaymentflowdemo.presentation.ui.application.CoreApp;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: refactor to Kotlin
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public abstract class BaseActivity extends AppCompatActivity implements IdlingResource {
 
