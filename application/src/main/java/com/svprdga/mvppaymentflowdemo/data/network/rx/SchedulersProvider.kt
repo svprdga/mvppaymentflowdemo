@@ -1,10 +1,16 @@
 package com.svprdga.mvppaymentflowdemo.data.network.rx
 
 import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
-interface SchedulersProvider {
+class SchedulersProvider {
 
-    fun io(): Scheduler
+    fun io(): Scheduler {
+        return Schedulers.io()
+    }
 
-    fun ui(): Scheduler
+    fun ui(): Scheduler {
+        return AndroidSchedulers.mainThread()
+    }
 }

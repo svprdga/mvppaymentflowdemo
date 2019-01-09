@@ -1,6 +1,7 @@
 package com.svprdga.mvppaymentflowdemo.di.module
 
 import android.content.Context
+import com.svprdga.mvppaymentflowdemo.util.CryptoUtils
 import com.svprdga.mvppaymentflowdemo.util.PermissionHelper
 import com.svprdga.mvppaymentflowdemo.util.TextProvider
 import dagger.Module
@@ -20,5 +21,11 @@ class UtilModule {
     @Singleton
     fun provideTextProvider(context: Context): TextProvider {
         return TextProvider(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCryptoUtils(): CryptoUtils {
+        return CryptoUtils()
     }
 }

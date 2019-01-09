@@ -1,6 +1,8 @@
 package com.svprdga.mvppaymentflowdemo.presentation.presenter
 
+import android.os.Handler
 import com.svprdga.mvppaymentflowdemo.data.datasource.ContactDataSource
+import com.svprdga.mvppaymentflowdemo.data.network.client.ApiClient
 import com.svprdga.mvppaymentflowdemo.domain.model.Contact
 import com.svprdga.mvppaymentflowdemo.presentation.eventbus.*
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.abstraction.IContactsPresenter
@@ -14,7 +16,8 @@ class ContactsPresenter(
     logger: Logger,
     private val mainBus: MainBus,
     private val contactDataSource: ContactDataSource,
-    private val contactsBus: ContactsBus)
+    private val contactsBus: ContactsBus,
+    private val apiClient: ApiClient)
     : BasePresenter(logger), IContactsPresenter {
 
     // ****************************************** VARS ***************************************** //
@@ -47,6 +50,11 @@ class ContactsPresenter(
         this.view = view
 
         mainBus.getData().subscribe(mainDisposable)
+
+        val thread = Thread() {
+            apiClient.getCharacters()
+        }.start()
+
     }
 
     override fun unBind() {

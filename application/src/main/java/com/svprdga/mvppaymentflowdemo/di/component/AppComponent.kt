@@ -9,12 +9,15 @@ import javax.inject.Singleton
 import dagger.Component
 
 @Singleton
-@Component(modules = [AppModule::class, DataModule::class, UtilModule::class, BusModule::class])
+@Component(
+    modules = [AppModule::class, DataModule::class, UtilModule::class, BusModule::class,
+        UrlModule::class, NetworkModule::class])
 interface AppComponent {
 
     fun plusUiComponent(
         uiComponentModule: UiComponentModule,
-        presenterModule: PresenterModule): UiComponent
+        presenterModule: PresenterModule
+    ): UiComponent
 
     fun inject(target: BaseActivity)
     fun inject(target: BaseFragment)
