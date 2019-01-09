@@ -59,18 +59,6 @@ class MainActivity : BaseActivity(), IMainView {
         presenter.bind(this)
     }
 
-    public override fun onStart() {
-        super.onStart()
-
-        presenter.onStartView()
-    }
-
-    public override fun onStop() {
-        super.onStop()
-
-        presenter.onStopView()
-    }
-
     override fun onDestroy() {
         super.onDestroy()
 

@@ -2,10 +2,12 @@ package com.svprdga.mvppaymentflowdemo.util
 
 import android.util.Log
 import com.svprdga.mvppaymentflowdemo.di.annotation.PerUiComponent
+import com.svprdga.mvppaymentflowdemo.domain.extra.Mockable
 
 /**
  * Log class for UI components.
  */
+@Mockable
 @PerUiComponent
 class Logger(private val tag: String) {
 

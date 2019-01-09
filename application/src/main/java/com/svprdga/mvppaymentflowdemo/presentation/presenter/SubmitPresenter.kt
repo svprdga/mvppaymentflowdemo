@@ -53,14 +53,6 @@ class SubmitPresenter(
         mainDisposable.dispose()
     }
 
-    override fun onStartView() {
-        log.debug("Start view.")
-    }
-
-    override fun onStopView() {
-        log.debug("Stop view.")
-    }
-
     // ************************************ PRIVATE METHODS ************************************ //
 
     /**

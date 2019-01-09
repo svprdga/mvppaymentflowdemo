@@ -2,6 +2,7 @@ package com.svprdga.mvppaymentflowdemo.di.module
 
 import com.svprdga.mvppaymentflowdemo.data.datasource.ContactDataSource
 import com.svprdga.mvppaymentflowdemo.data.network.client.ApiClient
+import com.svprdga.mvppaymentflowdemo.util.SchedulersProvider
 import com.svprdga.mvppaymentflowdemo.di.annotation.PerUiComponent
 import com.svprdga.mvppaymentflowdemo.presentation.eventbus.AmountBus
 import com.svprdga.mvppaymentflowdemo.presentation.eventbus.ContactsBus
@@ -36,8 +37,9 @@ class PresenterModule {
     @PerUiComponent
     fun provideContactPresenter(logger: Logger, mainBus: MainBus,
                                 contactDataSource: ContactDataSource, contactsBus: ContactsBus,
-                                apiClient: ApiClient): IContactsPresenter {
-        return ContactsPresenter(logger, mainBus, contactDataSource, contactsBus, apiClient)
+                                apiClient: ApiClient, schedulers: SchedulersProvider
+    ): IContactsPresenter {
+        return ContactsPresenter(logger, mainBus, contactDataSource, contactsBus, apiClient, schedulers)
     }
 
     @Provides

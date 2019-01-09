@@ -1,5 +1,6 @@
 package com.svprdga.mvppaymentflowdemo.presentation.eventbus
 
+import com.svprdga.mvppaymentflowdemo.domain.extra.Mockable
 import com.svprdga.mvppaymentflowdemo.domain.model.Contact
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
@@ -17,6 +18,7 @@ data class MainData(
     val amount: Float? = null
 )
 
+@Mockable
 class MainBus {
 
     // ****************************************** VARS ***************************************** //

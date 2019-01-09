@@ -27,14 +27,6 @@ class AmountPresenter(
         view = null
     }
 
-    override fun onStartView() {
-        log.debug("Start view.")
-    }
-
-    override fun onStopView() {
-        log.debug("Stop view.")
-    }
-
     override fun newValueEntered(value: String) {
         val data = try {
             AmountData(AmountEvent.SET_AMOUNT, value.toFloat())

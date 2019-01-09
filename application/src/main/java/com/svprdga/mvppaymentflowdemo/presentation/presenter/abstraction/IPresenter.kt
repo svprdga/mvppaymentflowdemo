@@ -17,14 +17,4 @@ interface IPresenter<T : IView> {
      * Method which unbinds the bound view from this presenter.
      */
     fun unBind()
-
-    /**
-     * Method triggered when the view just appears.
-     */
-    fun onStartView()
-
-    /**
-     * Method triggered when the view just dissappears.
-     */
-    fun onStopView()
 }

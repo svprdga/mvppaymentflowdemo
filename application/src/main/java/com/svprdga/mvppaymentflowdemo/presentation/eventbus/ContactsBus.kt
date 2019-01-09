@@ -1,9 +1,11 @@
 package com.svprdga.mvppaymentflowdemo.presentation.eventbus
 
+import com.svprdga.mvppaymentflowdemo.domain.extra.Mockable
 import com.svprdga.mvppaymentflowdemo.domain.model.Contact
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 
+@Mockable
 class ContactsBus {
 
     // ****************************************** VARS ***************************************** //

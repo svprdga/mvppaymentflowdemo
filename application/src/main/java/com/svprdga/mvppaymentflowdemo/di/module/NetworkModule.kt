@@ -4,7 +4,7 @@ import com.google.gson.Gson
 import com.svprdga.mvppaymentflowdemo.BuildConfig
 import com.svprdga.mvppaymentflowdemo.data.network.client.ApiClient
 import com.svprdga.mvppaymentflowdemo.data.network.mapper.Mapper
-import com.svprdga.mvppaymentflowdemo.data.network.rx.SchedulersProvider
+import com.svprdga.mvppaymentflowdemo.util.SchedulersProvider
 import com.svprdga.mvppaymentflowdemo.util.CryptoUtils
 import dagger.Module
 import dagger.Provides
@@ -63,9 +63,9 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideApiClient(schedulersProvider: SchedulersProvider, retrofit: Retrofit,
+    fun provideApiClient(retrofit: Retrofit,
                          cryptoUtils: CryptoUtils, mapper: Mapper): ApiClient {
-        return ApiClient(retrofit, schedulersProvider, cryptoUtils, mapper)
+        return ApiClient(retrofit, cryptoUtils, mapper)
     }
 
 }

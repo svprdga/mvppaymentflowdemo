@@ -2,7 +2,6 @@ package com.svprdga.mvppaymentflowdemo.data.network.client
 
 import com.svprdga.mvppaymentflowdemo.data.network.abstraction.IApi
 import com.svprdga.mvppaymentflowdemo.data.network.mapper.Mapper
-import com.svprdga.mvppaymentflowdemo.data.network.rx.SchedulersProvider
 import com.svprdga.mvppaymentflowdemo.domain.extra.Keys
 import com.svprdga.mvppaymentflowdemo.domain.extra.Mockable
 import com.svprdga.mvppaymentflowdemo.domain.model.Contact
@@ -12,7 +11,6 @@ import retrofit2.Retrofit
 
 @Mockable
 class ApiClient(retrofit: Retrofit,
-                private val schedulers: SchedulersProvider,
                 private val cryptoUtils: CryptoUtils,
                 private val mapper: Mapper
 ) {

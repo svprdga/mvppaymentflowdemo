@@ -1,16 +1,17 @@
 package com.svprdga.mvppaymentflowdemo.presentation.presenter
 
+import com.svprdga.mvppaymentflowdemo.BuildConfig
 import com.svprdga.mvppaymentflowdemo.data.datasource.ContactDataSource
 import com.svprdga.mvppaymentflowdemo.data.network.client.ApiClient
+import com.svprdga.mvppaymentflowdemo.util.SchedulersProvider
+import com.svprdga.mvppaymentflowdemo.domain.extra.Values
 import com.svprdga.mvppaymentflowdemo.domain.model.Contact
 import com.svprdga.mvppaymentflowdemo.presentation.eventbus.*
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.abstraction.IContactsPresenter
 import com.svprdga.mvppaymentflowdemo.presentation.presenter.view.IContactsView
 import com.svprdga.mvppaymentflowdemo.util.Logger
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableObserver
-import io.reactivex.schedulers.Schedulers
+import java.lang.UnsupportedOperationException
 import java.util.*
 
 private const val API_CHAR_LIMIT = 50
@@ -20,7 +21,8 @@ class ContactsPresenter(
     private val mainBus: MainBus,
     private val contactDataSource: ContactDataSource,
     private val contactsBus: ContactsBus,
-    private val apiClient: ApiClient
+    private val apiClient: ApiClient,
+    private val schedulers: SchedulersProvider
 ) : BasePresenter(logger), IContactsPresenter {
 
     // ****************************************** VARS ***************************************** //
@@ -30,23 +32,23 @@ class ContactsPresenter(
 
     // ************************************* CALLBACK VARS ************************************* //
 
-    private val mainDisposable: DisposableObserver<MainData>
-        get() = object : DisposableObserver<MainData>() {
+    var mainDisposable: DisposableObserver<MainData> =
+        object : DisposableObserver<MainData>() {
             override fun onNext(result: MainData) {
                 if (result.event == MainEvent.LOAD_CONTACTS) loadContacts()
                 else if (result.event == MainEvent.UNSELECT_ALL) unselectAllContacts()
             }
 
             override fun onError(e: Throwable) {
-                // nothing.
+                // cannot happen
             }
 
             override fun onComplete() {
-                // nothing.
+                // cannot happen
             }
         }
 
-    private val disposable: DisposableObserver<List<Contact>> =
+    var contactsDisposable: DisposableObserver<List<Contact>> =
         object : DisposableObserver<List<Contact>>() {
 
             val mainList = ArrayList<Contact>()
@@ -78,15 +80,7 @@ class ContactsPresenter(
         view = null
 
         mainDisposable.dispose()
-        disposable.dispose()
-    }
-
-    override fun onStartView() {
-        log.debug("Start view.")
-    }
-
-    override fun onStopView() {
-        log.debug("Stop view.")
+        contactsDisposable.dispose()
     }
 
     override fun contactSelected(contact: Contact) {
@@ -99,6 +93,50 @@ class ContactsPresenter(
         contactsBus.setData(contacts)
     }
 
+    // *********************************** PROTECTED METHODS *********************************** //
+
+    /**
+     * Get the attached view.
+     *
+     * Use is restricted to the test environment.
+     */
+    @Throws(UnsupportedOperationException::class)
+    fun getView(): IContactsView? {
+        if (BuildConfig.BUILD_TYPE == Values.Development.Environment.AUTO_TEST) {
+            return view
+        } else {
+            throw UnsupportedOperationException()
+        }
+    }
+
+    /**
+     * Set view.
+     *
+     * Use is restricted to the test environment.
+     */
+    @Throws(UnsupportedOperationException::class)
+    fun setView(view: IContactsView) {
+        if (BuildConfig.BUILD_TYPE == Values.Development.Environment.AUTO_TEST) {
+            this.view = view
+        } else {
+            throw UnsupportedOperationException()
+        }
+    }
+
+    /**
+     * Get the list of stored contacts.
+     *
+     * Use is restricted to the test environment.
+     */
+    @Throws(UnsupportedOperationException::class)
+    fun getContacts(): ArrayList<Contact> {
+        if (BuildConfig.BUILD_TYPE == Values.Development.Environment.AUTO_TEST) {
+            return contacts
+        } else {
+            throw UnsupportedOperationException()
+        }
+    }
+
     // ************************************ PRIVATE METHODS ************************************ //
 
     private fun loadContacts() {
@@ -106,12 +144,12 @@ class ContactsPresenter(
         view?.showLoading()
 
         contactDataSource.getAllContacts()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(schedulers.io())
+            .observeOn(schedulers.ui())
             .mergeWith(apiClient.getCharacters(API_CHAR_LIMIT))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(disposable)
+            .subscribeOn(schedulers.io())
+            .observeOn(schedulers.ui())
+            .subscribe(contactsDisposable)
     }
 
     private fun unselectAllContacts() {

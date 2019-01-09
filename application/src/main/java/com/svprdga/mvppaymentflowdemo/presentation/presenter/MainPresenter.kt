@@ -104,14 +104,6 @@ class MainPresenter(
         amountDisposable.dispose()
     }
 
-    override fun onStartView() {
-        log.debug("Start view.")
-    }
-
-    override fun onStopView() {
-        log.debug("Stop view.")
-    }
-
     override fun readContactsPermissionGranted() {
         view?.hidePermissionDeniedLayout()
         mainBus.setData(MainData(event = MainEvent.LOAD_CONTACTS))
